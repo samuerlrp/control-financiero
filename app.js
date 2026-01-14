@@ -2,16 +2,11 @@
 // CONFIGURACIÓN DE FIREBASE
 // ============================================
 // IMPORTANTE: Reemplaza estos valores con tu configuración de Firebase YA REMPLAZADO
-const firebaseConfig = {
-// Importa las funciones que necesitas de los SDK que necesitas
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Agregar SDK para los productos de Firebase que desea utilizar
-// https://firebase.google.com/docs/web/setup#bibliotecas-disponibles
-
-// La configuración de Firebase de su aplicación web
-// Para Firebase JS SDK v7.20.0 y posteriores, MeasurementId es opcional
-const firebaseConfig = {
+const firebaseConfig = 
+{
+  
+  const firebaseConfig = 
+  {
   apiKey: "AIzaSyAzESgTSpqJxVupoUb43cAWOW68xHm30o0",
   authDomain: "control-financiero-47214.firebaseapp.com",
   databaseURL: "https://control-financiero-47214-default-rtdb.firebaseio.com",
@@ -20,12 +15,7 @@ const firebaseConfig = {
   messagingSenderId: "1047725590425",
   appId: "1:1047725590425:web:b3d134dc625735a13e3508",
   measurementId: "G-7DRNDJWK8D"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-};
+  };
 
 // Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
