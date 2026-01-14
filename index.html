@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Control Financiero Personal</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header con resumen -->
+        <div class="header-card">
+            <h1>💰 Control Financiero Personal</h1>
+            
+            <div class="summary-grid">
+                <div class="summary-card efectivo">
+                    <div class="summary-header">
+                        <span>Efectivo Total</span>
+                        <span class="icon">📊</span>
+                    </div>
+                    <div class="summary-amount" id="efectivoTotal">S/ 0.00</div>
+                </div>
+
+                <div class="summary-card ingresos">
+                    <div class="summary-header">
+                        <span>Ingresos</span>
+                        <span class="icon">📈</span>
+                    </div>
+                    <div class="summary-amount" id="ingresosTotal">S/ 0.00</div>
+                </div>
+
+                <div class="summary-card gastos">
+                    <div class="summary-header">
+                        <span>Gastos</span>
+                        <span class="icon">📉</span>
+                    </div>
+                    <div class="summary-amount" id="gastosTotal">S/ 0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de registro -->
+        <div class="card">
+            <h2>Registrar Transacción</h2>
+            <div class="form-container">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tipo">Tipo</label>
+                        <select id="tipo" class="input">
+                            <option value="gasto">Gasto</option>
+                            <option value="ingreso">Ingreso</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="monto">Monto (S/)</label>
+                        <input type="number" id="monto" class="input" placeholder="0.00" step="0.01" min="0">
+                    </div>
+
+                    <div class="form-group" id="categoriaGroup">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" class="input">
+                            <option value="Recreativos">Recreativos</option>
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Vivienda">Vivienda</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" id="fecha" class="input">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="descripcion">Descripción</label>
+                        <input type="text" id="descripcion" class="input" placeholder="Ej: Almuerzo, Recibo de luz, etc.">
+                    </div>
+                </div>
+
+                <button id="btnAgregar" class="btn-primary">
+                    <span class="btn-icon">➕</span>
+                    Agregar Transacción
+                </button>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="charts-grid" id="chartsSection" style="display: none;">
+            <div class="card">
+                <h3>Gastos por Categoría</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+
+            <div class="card">
+                <h3>Comparación de Gastos</h3>
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="card">
+            <div class="filters">
+                <span class="filter-icon">🔍</span>
+                <button class="filter-btn active" data-filter="all">Todo</button>
+                <button class="filter-btn" data-filter="today">Hoy</button>
+                <button class="filter-btn" data-filter="month">Este Mes</button>
+            </div>
+        </div>
+
+        <!-- Lista de transacciones -->
+        <div class="card">
+            <h2>Historial de Transacciones <span id="transactionCount">(0)</span></h2>
+            <div id="transactionsList">
+                <div class="empty-state">
+                    <p>📝 No hay transacciones registradas</p>
+                    <p class="empty-subtitle">Agrega tu primera transacción arriba</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info de sincronización -->
+        <div class="info-card">
+            <p>
+                <strong>☁️ Sincronización automática:</strong> 
+                Todos los cambios se guardan automáticamente en la nube y se sincronizan entre todos tus dispositivos en tiempo real.
+            </p>
+        </div>
+
+        <!-- Estado de conexión -->
+        <div id="connectionStatus" class="connection-status">
+            <span id="statusDot" class="status-dot"></span>
+            <span id="statusText">Conectando...</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
