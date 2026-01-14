@@ -5,17 +5,47 @@
 const firebaseConfig = 
 {
   
-  const firebaseConfig = 
-  {
+  // Import the functions you need from the SDKs you need
+
+import { initializeApp } from "firebase/app";
+
+import { getAnalytics } from "firebase/analytics";
+
+// TODO: Add SDKs for Firebase products that you want to use
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+
+// Your web app's Firebase configuration
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+const firebaseConfig = {
+
   apiKey: "AIzaSyAzESgTSpqJxVupoUb43cAWOW68xHm30o0",
+
   authDomain: "control-financiero-47214.firebaseapp.com",
+
   databaseURL: "https://control-financiero-47214-default-rtdb.firebaseio.com",
+
   projectId: "control-financiero-47214",
+
   storageBucket: "control-financiero-47214.firebasestorage.app",
+
   messagingSenderId: "1047725590425",
+
   appId: "1:1047725590425:web:b3d134dc625735a13e3508",
+
   measurementId: "G-7DRNDJWK8D"
-  };
+
+};
+
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+const analytics = getAnalytics(app);
 
 // Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
