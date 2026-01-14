@@ -1,51 +1,15 @@
 // ============================================
 // CONFIGURACIÓN DE FIREBASE
 // ============================================
-// IMPORTANTE: Reemplaza estos valores con tu configuración de Firebase YA REMPLAZADO
-const firebaseConfig = 
-{
- // Import the functions you need from the SDKs you need
-
-import { initializeApp } from "firebase/app";
-
-// TODO: Add SDKs for Firebase products that you want to use
-
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-
-// Your web app's Firebase configuration
-
 const firebaseConfig = {
-
-  apiKey: "AIzaSyB35ULnu3mnwinb0gvrXLjtqzJyz8aMmH8",
-
-  authDomain: "control-financiero-41940.firebaseapp.com",
-
-  databaseURL: "https://control-financiero-41940-default-rtdb.firebaseio.com",
-
-  projectId: "control-financiero-41940",
-
-  storageBucket: "control-financiero-41940.firebasestorage.app",
-
-  messagingSenderId: "845139333212",
-
-  appId: "1:845139333212:web:bd91e87e922fe439d35699"
-
+    apiKey: "AIzaSyB35ULnu3mnwinb0gvrXLjtqzJyz8aMmH8",
+    authDomain: "control-financiero-41940.firebaseapp.com",
+    databaseURL: "https://control-financiero-41940-default-rtdb.firebaseio.com",
+    projectId: "control-financiero-41940",
+    storageBucket: "control-financiero-41940.firebasestorage.app",
+    messagingSenderId: "845139333212",
+    appId: "1:845139333212:web:bd91e87e922fe439d35699"
 };
-
-
-// Initialize Firebase
-
-const app = initializeApp(firebaseConfig);
-
-};
-
-
-// Initialize Firebase
-
-const app = initializeApp(firebaseConfig);
-
-const analytics = getAnalytics(app);
 
 // Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
