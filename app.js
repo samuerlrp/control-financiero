@@ -11,10 +11,18 @@ const firebaseConfig = {
     appId: "1:845139333212:web:bd91e87e922fe439d35699"
 };
 
-// Inicializar Firebase
+// ============================================
+// CÓDIGO DE ACCESO
+// ============================================
+// CAMBIA ESTE CÓDIGO POR EL QUE QUIERAS (mínimo 6 caracteres)
+const ACCESS_CODE = "finanzas2025";
+
+// ============================================
+// INICIALIZACIÓN
+// ============================================
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-const transactionsRef = database.ref('transactions');
+const transactionsRef = database.ref('shared/transactions');
 
 // ============================================
 // VARIABLES GLOBALES
@@ -23,19 +31,93 @@ let transactions = [];
 let currentFilter = 'all';
 let pieChart = null;
 let barChart = null;
+let isAuthenticated = false;
 
 const CATEGORIES = ['Recreativos', 'Alimentos', 'Vivienda', 'Mantenimiento'];
 const COLORS = ['#8b5cf6', '#3b82f6', '#10b981', '#f59e0b'];
 
 // ============================================
-// INICIALIZACIÓN
+// VERIFICAR ACCESO
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
+    // Verificar si ya está autenticado en localStorage
+    const storedAuth = localStorage.getItem('financeAuth');
+    if (storedAuth === ACCESS_CODE) {
+        isAuthenticated = true;
+        showApp();
+        initApp();
+    } else {
+        showAccessScreen();
+    }
+    
+    setupAccessListeners();
+});
+
+function showAccessScreen() {
+    document.getElementById('accessScreen').style.display = 'flex';
+    document.getElementById('appScreen').style.display = 'none';
+}
+
+function showApp() {
+    document.getElementById('accessScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
+}
+
+function setupAccessListeners() {
+    const accessCodeInput = document.getElementById('accessCode');
+    const btnAccess = document.getElementById('btnAccess');
+    
+    btnAccess.addEventListener('click', handleAccess);
+    accessCodeInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleAccess();
+    });
+    
+    // Logout
+    document.getElementById('btnLogout').addEventListener('click', handleLogout);
+}
+
+function handleAccess() {
+    const code = document.getElementById('accessCode').value.trim();
+    const errorElement = document.getElementById('accessError');
+    
+    if (!code) {
+        errorElement.textContent = 'Por favor ingresa el código';
+        return;
+    }
+    
+    if (code === ACCESS_CODE) {
+        // Guardar autenticación
+        localStorage.setItem('financeAuth', code);
+        isAuthenticated = true;
+        showApp();
+        initApp();
+        showNotification('✅ Acceso concedido');
+    } else {
+        errorElement.textContent = '❌ Código incorrecto. Intenta nuevamente.';
+        document.getElementById('accessCode').value = '';
+    }
+}
+
+function handleLogout() {
+    if (confirm('¿Salir de la aplicación?')) {
+        localStorage.removeItem('financeAuth');
+        isAuthenticated = false;
+        showAccessScreen();
+        document.getElementById('accessCode').value = '';
+        document.getElementById('accessError').textContent = '';
+        showNotification('👋 Sesión cerrada');
+    }
+}
+
+// ============================================
+// INICIALIZACIÓN DE LA APP
+// ============================================
+function initApp() {
     setupEventListeners();
     setupFirebaseListeners();
     setDefaultDate();
     updateConnectionStatus('connecting');
-});
+}
 
 // ============================================
 // EVENT LISTENERS
@@ -110,6 +192,8 @@ function setupFirebaseListeners() {
 // AGREGAR TRANSACCIÓN
 // ============================================
 function addTransaction() {
+    if (!isAuthenticated) return;
+
     const tipo = document.getElementById('tipo').value;
     const monto = parseFloat(document.getElementById('monto').value);
     const categoria = document.getElementById('categoria').value;
@@ -158,6 +242,8 @@ function addTransaction() {
 // ELIMINAR TRANSACCIÓN
 // ============================================
 function deleteTransaction(id) {
+    if (!isAuthenticated) return;
+
     if (confirm('¿Estás seguro de eliminar esta transacción?')) {
         transactionsRef.child(id).remove()
             .then(() => {
