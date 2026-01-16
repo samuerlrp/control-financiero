@@ -14,7 +14,6 @@ const firebaseConfig = {
 // ============================================
 // CÓDIGO DE ACCESO
 // ============================================
-// CAMBIA ESTE CÓDIGO POR EL QUE QUIERAS (mínimo 6 caracteres)
 const ACCESS_CODE = "finanzas2025";
 
 // ============================================
